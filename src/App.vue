@@ -227,7 +227,6 @@
         flex-direction: row;
         justify-content: space-around;
         align-items: center;
-        width: 100%;
         height: 15px;
         background-color: #16a085;
         padding: 20px;
