@@ -8,7 +8,8 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "clean_dist": "rimraf dist",
-    "zip": "npm run clean_dist && npm run build && bestzip bundle.zip dist/* ./index.html"
+    "copy_files": "rimraf bundle && mkdirp bundle && mkdirp bundle/dist && copy dist/* ./bundle/dist &&  copy index.html ./bundle",
+    "create_bundle": "npm run clean_dist && npm run build && npm run copy_files"
   },
   "dependencies": {
     "vue": "^2.2.1"
@@ -17,9 +18,10 @@
     "babel-core": "^6.0.0",
     "babel-loader": "^6.0.0",
     "babel-preset-latest": "^6.0.0",
-    "bestzip": "^1.1.4",
+    "copy": "^0.3.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
+    "mkdirp": "^0.5.1",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",
     "vue-loader": "^11.1.4",
