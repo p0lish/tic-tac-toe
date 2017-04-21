@@ -54,7 +54,7 @@
              **/
 
             isPreviousSessionPresent(){
-                let storageIsPresent = (storage.loadItem('appData')) !== null || (storage.loadItem('boardState')) !== null;
+                let storageIsPresent = (storage.loadItem('boardState')) || (storage.loadItem('appData'));
                 return storageIsPresent && !this.isGameModeSelected;
             }
         },
