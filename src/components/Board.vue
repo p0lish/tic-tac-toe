@@ -41,12 +41,12 @@
         maxPossibleMove: 9,
 
         // active player can be 'O' or 'X'
-        activePlayer: this.O_player,
+        activePlayer: 'O',
 
         // game possible states: 'turn', 'win', 'draw'
         gameStatus: 'turn',
 
-        statusMessage: this.O_player + '\'s turn',
+        statusMessage: 'O \'s turn',
 
         moves: 0,
 
@@ -98,6 +98,7 @@
 
       togglePlayer () {
         this.activePlayer = this.getNonActivePlayer
+        console.log(this.activePlayer)
       },
 
       /**
