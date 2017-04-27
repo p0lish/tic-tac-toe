@@ -9,7 +9,8 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "clean_dist": "rimraf dist",
     "copy_files": "rimraf bundle && copy dist/* ./bundle &&  copy index.html ./bundle",
-    "create_bundle": "npm run clean_dist && npm run build && npm run copy_files"
+    "create_bundle": "npm run clean_dist && npm run build && npm run copy_files",
+    "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
     "vue": "^2.2.1"
@@ -21,6 +22,15 @@
     "copy": "^0.3.0",
     "cross-env": "^3.0.0",
     "css-loader": "^0.25.0",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-loader": "^1.7.1",
+    "eslint-plugin-html": "^2.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
     "mkdirp": "^0.5.1",
     "node-sass": "^4.5.0",
     "sass-loader": "^5.0.1",

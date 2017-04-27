@@ -24,124 +24,118 @@
 
     </div>
 </template>
-
 <script>
-    import Board from './components/Board.vue'
-    import storage from './libs/storage';
+  import Board from './components/Board.vue'
+  import storage from './libs/storage'
 
-    export default {
-        components: {Board},
-        storage: [storage],
-        name: 'app',
-        data () {
-            return {
-                actionText: 'Restart',
-                isGameModeSelected: false,
-                konami: [],
-                matches: 0,
-                stats: {
-                    O: 0,
-                    X: 0
-                }
-            }
-        },
-        computed: {
-
-
-            /** Check if previous game session available, then it's possible to choose  the previous session, or
-              *  a new session.
-              * @returns {boolean}
-             **/
-
-            isPreviousSessionPresent(){
-                let storageIsPresent = (storage.loadItem('boardState')) || (storage.loadItem('appData'));
-                return storageIsPresent && !this.isGameModeSelected;
-            }
-        },
-        mounted (){
-
-            /**
-             * Check local storage is available in browser
-             */
-
-            if (typeof(Storage) == 'undefined') {
-                alert("Your game state cannot be saved because local storage is not supported");
-            }
-        },
-        created: function () {
-            window.addEventListener('keyup', this.konamicode);
-            Event.$on('win', (winner) => {
-                this.stats[winner]++;
-                this.gameStatus = 'endgame';
-                this.actionText = 'New game';
-                storage.saveItem('appData', this.$data);
-            });
-            Event.$on('loadPreviousState', () => {
-                if (storage.loadItem('appData') !== null) {
-                    let savedAppState = storage.loadItem('appData');
-                    Object.assign(this.$data, savedAppState);
-                }
-            });
-        },
-        methods: {
-            restart () {
-                if (this.gameStatus === 'endgame') {
-                    this.gameStatus = 'ongame';
-                    this.actionText = 'Restart';
-                }
-                this.matches++;
-                Event.$emit('clear');
-                Event.$emit('resetBoard');
-                Event.$emit('startRandomPlayer');
-                storage.saveItem('appData', this.$data);
-
-
-            },
-            konamicode (e){
-                let keyPattern = "u,u,d,d,l,r,l,r,b,a";
-                if (this.konami.length === 10) {
-                    this.konami = []
-                }
-                if (e.key === 'ArrowUp') {
-                    this.konami.push('u')
-                }
-                if (e.key === 'ArrowDown') {
-                    this.konami.push('d')
-                }
-                if (e.key === 'ArrowRight') {
-                    this.konami.push('r')
-                }
-                if (e.key === 'ArrowLeft') {
-                    this.konami.push('l')
-                }
-                if (e.key.toLowerCase() === 'b') {
-                    this.konami.push('b')
-                }
-                if (e.key.toLowerCase() === 'a') {
-                    this.konami.push('a')
-                }
-                if (this.konami.join() === keyPattern) {
-                    this.gatesAreOpen()
-                }
-
-            },
-            gatesAreOpen(){
-                let win = window.open(atob('aHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvWC1jZldNMEJDXzQ/YXV0b3BsYXk9MQ=='), '_blank');
-                win.focus();
-            },
-            continueGame() {
-                this.isGameModeSelected = true;
-                Event.$emit('loadPreviousState');
-            },
-            newGame(){
-                localStorage.clear();
-                Event.$emit('startRandomPlayer');
-                this.isGameModeSelected = true;
-            }
+  export default {
+    components: {Board},
+    storage: [storage],
+    name: 'app',
+    data () {
+      return {
+        actionText: 'Restart',
+        isGameModeSelected: false,
+        konami: [],
+        matches: 0,
+        stats: {
+          O: 0,
+          X: 0
         }
-    }
-</script>
+      }
+    },
+    computed: {
 
+      /** Check if previous game session available, then it's possible to choose  the previous session, or
+       *  a new session.
+       * @returns {boolean}
+       **/
+
+      isPreviousSessionPresent () {
+        let storageIsPresent = (storage.loadItem('boardState')) || (storage.loadItem('appData'))
+        return storageIsPresent && !this.isGameModeSelected
+      }
+    },
+
+    mounted () {
+      /**
+       * Check local storage is available in browser
+       */
+
+      if (typeof (Storage) === 'undefined') {
+        window.alert('Your game state cannot be saved because local storage is not supported')
+      }
+    },
+    created: function () {
+      window.addEventListener('keyup', this.konamicode)
+      window.Event.$on('win', (winner) => {
+        this.stats[winner]++
+        this.gameStatus = 'endgame'
+        this.actionText = 'New game'
+        storage.saveItem('appData', this.$data)
+      })
+      window.Event.$on('loadPreviousState', () => {
+        if (storage.loadItem('appData') !== null) {
+          let savedAppState = storage.loadItem('appData')
+          Object.assign(this.$data, savedAppState)
+        }
+      })
+    },
+    methods: {
+      restart () {
+        if (this.gameStatus === 'endgame') {
+          this.gameStatus = 'ongame'
+          this.actionText = 'Restart'
+        }
+        this.matches++
+        window.Event.$emit('clear')
+        window.Event.$emit('resetBoard')
+        window.Event.$emit('startRandomPlayer')
+        storage.saveItem('appData', this.$data)
+      },
+      konamicode (e) {
+        let keyPattern = 'u,u,d,d,l,r,l,r,b,a'
+        if (this.konami.length === 10) {
+          this.konami = []
+        }
+        if (e.key === 'ArrowUp') {
+          this.konami.push('u')
+        }
+        if (e.key === 'ArrowDown') {
+          this.konami.push('d')
+        }
+        if (e.key === 'ArrowRight') {
+          this.konami.push('r')
+        }
+        if (e.key === 'ArrowLeft') {
+          this.konami.push('l')
+        }
+        if (e.key.toLowerCase() === 'b') {
+          this.konami.push('b')
+        }
+        if (e.key.toLowerCase() === 'a') {
+          this.konami.push('a')
+        }
+        if (this.konami.join() === keyPattern) {
+          this.gatesAreOpen()
+        }
+      },
+      gatesAreOpen () {
+        let win = window.open(window.atob('aHR0cHM6Ly93d3cueW91dHViZS5jb20vZW1iZWQvWC1jZldNMEJDXzQ/YXV0b3BsYXk9MQ=='), '_blank')
+        win.focus()
+      },
+      continueGame () {
+        this.isGameModeSelected = true
+        window.Event.$emit('loadPreviousState')
+      },
+      newGame () {
+        window.localStorage.clear()
+        window.Event.$emit('startRandomPlayer')
+        this.isGameModeSelected = true
+      }
+    }
+  }
+</script>
 <style lang="scss">
     body {
         background-color: #fafafa;
@@ -187,7 +181,8 @@
         margin: 0;
         padding: 10px;
     }
-    .restore:hover{
+
+    .restore:hover {
         background-color: #c0392b;
     }
 
@@ -201,7 +196,8 @@
         margin: 0;
         padding: 10px;
     }
-    .new-game:hover{
+
+    .new-game:hover {
         background-color: #1b8f6f;
     }
 

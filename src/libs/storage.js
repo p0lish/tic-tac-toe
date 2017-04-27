@@ -1,13 +1,11 @@
 export default {
-    loadItem: function (key) {
-        let item = JSON.parse(localStorage.getItem(key));
-        console.log("load: ", item);
-        return item;
-    },
+  loadItem: function (key) {
+    let item = JSON.parse(window.localStorage.getItem(key))
+    return item
+  },
 
-    saveItem: function (key, data) {
-        console.log("save: ", data);
-        let item = JSON.stringify(data);
-        localStorage.setItem(key, item);
-    },
+  saveItem: function (key, data) {
+    let item = JSON.stringify(data)
+    window.localStorage.setItem(key, item)
+  }
 }

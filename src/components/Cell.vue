@@ -3,41 +3,38 @@
 </template>
 
 <script>
-    export default {
-        props: ['name'],
-        data () {
-            return {
-                disabled: false,
-                content: ''
-            }
-        },
-        methods: {
-            check () {
-                if (!this.disabled) {
-                    Event.$emit('check', this.name);
-                    this.content = this.$parent.cells[this.name];
-                    this.disabled = true;
-                }
-            }
-
-        },
-        created () {
-            Event.$on('clear', () => {
-                this.content = '';
-                this.disabled = false;
-            });
-
-            Event.$on('disable', () => {
-                this.disabled = true;
-            });
-
-            Event.$on('loadPreviousState', () => {
-                    this.content = this.$parent.cells[this.name];
-
-                }
-            );
+  export default {
+    props: ['name'],
+    data () {
+      return {
+        disabled: false,
+        content: ''
+      }
+    },
+    methods: {
+      check () {
+        if (!this.disabled) {
+          window.Event.$emit('check', this.name)
+          this.content = this.$parent.cells[this.name]
+          this.disabled = true
         }
+      }
+    },
+    created () {
+      window.Event.$on('clear', () => {
+        this.content = ''
+        this.disabled = false
+      })
+
+      window.Event.$on('disable', () => {
+        this.disabled = true
+      })
+
+      window.Event.$on('loadPreviousState', () => {
+        this.content = this.$parent.cells[this.name]
+      })
     }
+  }
 </script>
 
 <style>
